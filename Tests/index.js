@@ -1,6 +1,6 @@
 const Chain = require ("./.../Chain.js");
 
-const MyChain = new Chain ("kkk");
+const MyChain = new Chain ("Test");
 
 MyChain.NewBlock ("lorem ipsum");
 MyChain.NewBlock (["lorem ipsum"]);
