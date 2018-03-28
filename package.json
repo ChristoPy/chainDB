@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/ChristoPy/chainDB/issues"
   },
-  "homepage": "https://github.com/ChristoPy/chainDB#readme"
+  "homepage": "https://github.com/ChristoPy/chainDB#readme",
+  "dependencies": {
+    "egoroof-blowfish": "^2.1.0",
+    "hash.js": "^1.1.3"
+  }
 }
