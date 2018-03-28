@@ -11,7 +11,7 @@ class Block {
 
 		this.CurrentHash = Hash.sha256 ().update (Content).digest ("hex");
 
-		this.Content = Content;
+		this.Content = JSON.stringify (Content);
 	}
 
 	EncryptBlockContent () {
