@@ -1,4 +1,4 @@
-const Chain = require ("./.../Chain.js");
+const Chain = require ("./../Chain.js");
 
 const MyChain = new Chain ("Test");
 
