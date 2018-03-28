@@ -9,9 +9,18 @@ class Block {
 
 		this.PreviousHash = PreviousHash;
 
-		this.CurrentHash = Hash.sha256 ().update (Content).digest ("hex");
+		this.CurrentHash = undefined;
 
 		this.Content = JSON.stringify (Content);
+	}
+
+	GenBlockHash () {
+
+		this.EncryptBlockContent ();
+
+		const ThingsToBeHashed = `${this.Content}${this.PreviousHash}`;
+
+		this.CurrentHash = Hash.sha256 ().update (ThingsToBeHashed).digest ("hex");
 	}
 
 	EncryptBlockContent () {

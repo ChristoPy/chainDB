@@ -36,7 +36,7 @@ class Chain {
 
 		this.CurrentBlock = new Block (this.__PreviousBlockHash__, Content);
 
-		this.CurrentBlock.EncryptBlockContent ();
+		this.CurrentBlock.GenBlockHash ();
 
 		this.Chain.push ({
 
