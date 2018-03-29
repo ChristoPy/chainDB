@@ -109,7 +109,7 @@ class Chain {
 
 		/**
 		 * Add the Block to the Chain.
-		 * @type {}
+		 * @type {Object}
 		 */
 		this.Chain.push ({
 
