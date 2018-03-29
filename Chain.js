@@ -111,7 +111,7 @@ class Chain {
 
 		if (Chain) {
 
-			this.Chain = Chain;
+			this.Chain = JSON.parse (Chain);
 		}
 	}
 
