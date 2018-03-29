@@ -97,10 +97,22 @@ class Chain {
 
 	__GetChainFile__ (ChainName) {
 
-		this.Chain = JSON.parse (
-			FS.readFileSync (`./${ChainName}/chainDB`, 
-				{encoding: "utf-8"})
-		);
+
+		let Chain;
+
+		try {
+
+			Chain = FS.readFileSync (`./${this.ChainName}/chainDB`, {encoding: "utf-8"});
+		}
+		catch (SomeError) {
+
+			throw (SomeError);
+		}
+
+		if (Chain) {
+
+			this.Chain = Chain;
+		}
 	}
 
 	//////////////////////////////////////////////////////////////
@@ -110,8 +122,7 @@ class Chain {
 	get __PreviousBlockHash__ () {
 
 		return (this.Chain.length > 0 ? 
-			this.Chain [this.Chain.length - 1].CurrentBlockHash : 
-			GENESIS_BLOCK_HASH);
+			this.Chain [this.Chain.length - 1].CurrentBlockHash : GENESIS_BLOCK_HASH);
 	}
 }
 
