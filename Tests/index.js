@@ -1,14 +1,21 @@
 const Chain = require ("./../Chain.js");
 
-const MyChain = new Chain ("Test");
+const MyChain0 = new Chain ("Test");
 
-MyChain.NewBlock ("lorem ipsum");
-MyChain.NewBlock (["lorem ipsum"]);
-MyChain.NewBlock (0);
-MyChain.NewBlock ([0, 1, 2, 3.1]);
-MyChain.NewBlock ({
+MyChain0.NewBlock ("lorem ipsum");
+MyChain0.NewBlock (["lorem ipsum"]);
+MyChain0.NewBlock (0);
+MyChain0.NewBlock ([0, 1, 2, 3.1]);
+MyChain0.NewBlock ({
 	0: "lorem ipsum",
 	1: ["lorem ipsum"],
 	2: 0,
 	3: [0, 1, 2, 3.1]
 });
+
+
+
+const MyChain0Copy = new Chain ("Test");
+MyChain0Copy.Open ();
+
+MyChain0.NewBlock ("some new data");
