@@ -18,4 +18,4 @@ MyChain0.NewBlock ({
 const MyChain0Copy = new Chain ("Test");
 MyChain0Copy.Open ();
 
-MyChain0.NewBlock ("some new data");
+MyChain0Copy.NewBlock ("some new data");
