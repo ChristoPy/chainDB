@@ -12,13 +12,15 @@ class Block {
 		this.CurrentHash = undefined;
 
 		this.Content = JSON.stringify (Content);
+
+		this.TimeStamp = JSON.stringify (new Date ());
 	}
 
 	GenBlockHash () {
 
 		this.EncryptBlockContent ();
 
-		const ThingsToBeHashed = `${this.Content}${this.PreviousHash}`;
+		const ThingsToBeHashed = `${this.Content}${this.PreviousHash}${this.TimeStamp}`;
 
 		this.CurrentHash = Hash.sha256 ().update (ThingsToBeHashed).digest ("hex");
 	}
