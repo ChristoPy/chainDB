@@ -50,27 +50,13 @@ class Chain {
 		 * Store all Blocks of the Chain.
 		 * @type {Array}
 		 */
-		this.Chain = [];
+		this.Chain = this.__CheckChainFileExistence__ (ChainName);
 
 		/**
 		 * The Name of the Chain, used to store the DB in a path with the Chain name.
 		 * @type {String}
 		 */
 		this.ChainName = ChainName;
-	}
-
-	/**
-	 * Open the Chain file.
-	 * 
-	 * @param {String} ChainName The name of the Chain to be opened.
-	 */
-	Open (ChainName) {
-
-		/**
-		 * Read the Chain file by a given name and assign to Chain if 
-		 * it be successfull.
-		 */
-		this.__GetChainFile__ (ChainName);
 	}
 
 
@@ -243,6 +229,19 @@ class Chain {
 			this.Chain = JSON.parse (Chain);
 		}
 	}
+
+	__CheckChainFileExistence__ (ChainName) {
+
+		if (FS.existsSync (`./${this.ChainName}/chainDB`)) {
+
+			this.__GetChainFile__ (ChainName);
+		}
+		else {
+
+			return [];
+		}
+	}
+
 
 	//////////////////////////////////////////////////////////////
 	// 						Helpers 							//
