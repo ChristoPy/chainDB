@@ -44,19 +44,41 @@ class Chain {
 	 * @param  {String} ChainName The name of the Chain.
 	 * @return {Object} Return the configured Chain object.
 	 */
-	constructor (ChainName = "chainDB") {
+	constructor (ChainName) {
 
 		/**
-		 * Store all Blocks of the Chain.
-		 * @type {Array}
+		 * Check if ChainName was given, setting every needed stuff wo use the Chain.
+		 * If isn't, throw an error.
+		 * 
+		 * @param  {String} ChainName ChainName The name of the Chain.
+		 * @return {Array}			The this.Chain definition, empty or not.
 		 */
-		this.Chain = this.__CheckChainFileExistence__ (ChainName);
+		if (ChainName) {
 
-		/**
-		 * The Name of the Chain, used to store the DB in a path with the Chain name.
-		 * @type {String}
-		 */
-		this.ChainName = ChainName;
+			/**
+			 * Store all Blocks of the Chain.
+			 * @type {Array}
+			 */
+			this.Chain = [];
+
+			/**
+			 * The Name of the Chain, used to store the DB in a path with the Chain name.
+			 * @type {String}
+			 */
+			this.ChainName = ChainName;
+
+
+
+			/**
+			 * Check if a Chain with the same name as ChainName exists, load if exists and
+			 * merge with this Chain.
+			 */
+			this.__CheckChainFileExistence__ (ChainName);
+		}
+		else {
+
+			throw new Error ("The ChainName Must Be Given.");
+		}
 	}
 
 
@@ -232,7 +254,7 @@ class Chain {
 
 	__CheckChainFileExistence__ (ChainName) {
 
-		if (FS.existsSync (`./${this.ChainName}/chainDB`)) {
+		if (FS.existsSync (`./${ChainName}/chainDB`)) {
 
 			this.__GetChainFile__ (ChainName);
 		}
