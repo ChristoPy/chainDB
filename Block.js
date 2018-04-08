@@ -73,7 +73,7 @@ class Block {
 		 * Concaten everything that's gonna be hashed.
 		 * @type {String}
 		 */
-		const ThingsToBeHashed = `${this.Content}${this.PreviousHash}${this.TimeStamp}`;
+		const ThingsToBeHashed = `${this.Name} - ${this.Content} - ${this.PreviousHash} - ${this.TimeStamp}`;
 
 		/**
 		 * Hash ThingsToBeHashed and set it as the CurrentHash.
