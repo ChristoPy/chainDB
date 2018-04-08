@@ -91,9 +91,10 @@ class Chain {
 	 * Create the Chain path if it doesn't exists.
 	 * Create a new Block and encrypt it's content.
 	 * 
+	 * @param {String} The Name of the Block.
 	 * @param {Any} The data to be stored in the Block.
 	 */
-	NewBlock (Content) {
+	NewBlock (Name, Content) {
 
 		/**
 		 * Make the Chain folder to store all blocks using the name of this Chain.
@@ -107,7 +108,7 @@ class Chain {
 		 * content of it.
 		 * @type {Object}
 		 */
-		this.CurrentBlock = new Block (this.__PreviousBlockHash__, Content);
+		this.CurrentBlock = new Block (Name, this.__PreviousBlockHash__, Content);
 
 		/**
 		 * Generate the Hash of this Block.
