@@ -121,6 +121,7 @@ class Chain {
 		 */
 		this.Chain.push ({
 
+			Name: this.CurrentBlock.Name,
 			PreviousBlockHash: this.CurrentBlock.PreviousHash,
 			CurrentBlockHash: this.CurrentBlock.CurrentHash
 		});
