@@ -21,11 +21,18 @@ class Block {
 	 * Instantiate the class, defining: previous hash, genesis block hash,
 	 * the hash of this Block, the content and the timeStamp.
 	 * 
+	 * @param  {String} Name The Name of the Block.
 	 * @param  {String} PreviousHash The Hash used by the last Block.
 	 * @param  {String} Content      The data to be stored.
 	 * @return {Object}              Return the configured Block object.
 	 */
-	constructor (PreviousHash, Content) {
+	constructor (Name, PreviousHash, Content) {
+
+		/**
+		 * The name of this Block.
+		 * @type {String}
+		 */
+		this.Name = Name;
 
 		/**
 		 * The hash used in the last Block.
