@@ -3,7 +3,7 @@ const Chain = require ("./../Chain.js");
 const MyChain0 = new Chain ("Test");
 
 MyChain0.NewBlock ("Title", "lorem ipsum");
-MyChain0.NewBlock ("Title inside an Array ", ["lorem ipsum"]);
+MyChain0.NewBlock ("Title inside an Array", ["lorem ipsum"]);
 MyChain0.NewBlock ("Zero", 0);
 MyChain0.NewBlock ("Zero to 3.1 inside an Array", [0, 1, 2, 3.1]);
 MyChain0.NewBlock ("Object with all data before this Block", {
