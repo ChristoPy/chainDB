@@ -18,3 +18,5 @@ MyChain0.NewBlock ("Object with all data before this Block", {
 const MyChain0Copy = new Chain ("Test");
 
 MyChain0Copy.NewBlock ("Update", "some new data");
+
+console.log (MyChain0Copy.GetBlock ("Update"));
