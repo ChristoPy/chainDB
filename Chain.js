@@ -159,7 +159,54 @@ class Chain {
 		this.__MakeChainFile__ ();
 	}
 
+	/**
+	 * Get a Block based on your Name.
+	 * 
+	 * @param {String} Name The Name of the Block.
+	 * @return {Object/null} Return the Block that's been found or null if not.
+	 */
+	GetBlock (Name) {
 
+		/**
+		 * Where store the block that was found.
+		 * @type {Object}
+		 */
+		let BlockFound = {};
+
+		/**
+		 * A variable to help return what was found.
+		 * @type {Boolean}
+		 */
+		let Found = false;
+
+
+		/**
+		 * Map this Chain and check if the given Name is one of all blocks of it, 
+		 * telling the Block that was found and if was really found or not.
+		 * 
+		 * @param  {Object} Block The Block of the iteration on the Chain.    
+		 */
+		this.Chain.map (Block => {
+
+			/**
+			 * Check if the current Block on the iteration has the given Name.
+			 * @param  {String} Block.Name The name of the Block.
+			 * @return {Object}            The Block informations.
+			 */
+			if (Block.Name === Name) {
+
+				BlockFound = Block;
+				Found = true;
+			}
+		});
+
+
+		/**
+		 * Return what was found, the Block or nothing.
+		 * @type {Object/Null}
+		 */
+		return (Found === true ? BlockFound : null);
+	}
 
 	///////////////////////////////////////////////////////////////
 	// 			Chains And Blocks Files Manipulators			 //
