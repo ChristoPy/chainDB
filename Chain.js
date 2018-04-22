@@ -293,7 +293,7 @@ class Chain {
 		 * after convert it to an Object.
 		 * 
 		 * @param  {Undefined/String} Chain The Chain file content.
-		 * @return {[type]}       [description]
+		 * @return {Object}       The Chain file content.
 		 */
 		if (Chain) {
 
@@ -301,16 +301,14 @@ class Chain {
 		}
 	}
 
+	/**
+	 * Check if the Chain file exists and get it if exists.
+	 * @param  {String} ChainName The name of the Chain.
+	 * @return {Array}           The parsed Chain or an empty Array.
+	 */
 	__CheckChainFileExistence__ (ChainName) {
 
-		if (FS.existsSync (`./${ChainName}/chainDB`)) {
-
-			this.__GetChainFile__ (ChainName);
-		}
-		else {
-
-			return [];
-		}
+		return (FS.existsSync (`./${ChainName}/chainDB`) ? this.__GetChainFile__ (ChainName) : []);
 	}
 
 
