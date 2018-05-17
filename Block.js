@@ -111,6 +111,32 @@ class Block {
 		 */
 		this.Content = JSON.stringify ({Content: EncodedContent});
 	}
+
+	/**
+	 * Decrypt the Block Content.
+	 * @return {String} The content of the Block as String.
+	 */
+	__DecryptBlockContent__ () {
+
+		/**
+		 * Set the BlowFish with the PreviousHash as key, the ECB mode and the padding to null.
+		 * @type {BlowFish}
+		 */
+		const BF = new BlowFish (this.PreviousHash, 
+			BlowFish.MODE.ECB, BlowFish.PADDING.NULL);
+
+		/**
+		 * Set the BlowFish iV to the first 8 bits in PreviousHash.
+		 */
+		BF.setIv (this.PreviousHash.slice (0, 8));
+
+
+		/**
+		 * Return the uncrypted Block Content.
+		 * @type {Object}
+		 */
+		return BF.decode (this.Content.Content, BlowFish.TYPE.STRING);
+	}
 }
 
 
