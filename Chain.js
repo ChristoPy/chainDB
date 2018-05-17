@@ -27,7 +27,7 @@ const Path = require ("path");
 
 /**
  * Set a constant to be used as Genesis Block Hash to the first block added to each DB.
- * @type {[type]}
+ * @type {String}
  */
 const GENESIS_BLOCK_HASH = Hash.sha256 ().update ("chainDB").digest ("hex");
 
@@ -71,7 +71,7 @@ class Chain {
 
 			/**
 			 * Check if a Chain with the same name as ChainName exists, load if exists and
-			 * merge with this Chain.
+			 * merge the DB data with this Chain data.
 			 */
 			this.__CheckChainFileExistence__ (ChainName);
 		}
@@ -91,8 +91,8 @@ class Chain {
 	 * Create the Chain path if it doesn't exists.
 	 * Create a new Block and encrypt it's content.
 	 * 
-	 * @param {String} The Name of the Block.
-	 * @param {Any} The data to be stored in the Block.
+	 * @param {String} Name The Name of the Block.
+	 * @param {Any} Content The data to be stored in the Block.
 	 */
 	NewBlock (Name, Content) {
 
@@ -163,49 +163,31 @@ class Chain {
 	 * Get a Block based on your Name.
 	 * 
 	 * @param {String} Name The Name of the Block.
-	 * @return {Object/null} Return the Block that's been found or null if not.
+	 * @return {Object/Null} Return the Block that's been found or null if not.
 	 */
 	GetBlock (Name) {
 
 		/**
-		 * Where store the block that was found.
-		 * @type {Object}
+		 * Where store all blocks that was found.
+		 * @type {Array}
 		 */
-		let BlockFound = {};
-
-		/**
-		 * A variable to help return what was found.
-		 * @type {Boolean}
-		 */
-		let Found = false;
+		let BlocksFound = [];
 
 
 		/**
-		 * Map this Chain and check if the given Name is one of all blocks of it, 
-		 * telling the Block that was found and if was really found or not.
+		 * Walk inside this Chain and check if the given Name deserves to any Blocks, 
+		 * telling the Block that was found.
 		 * 
-		 * @param  {Object} Block The Block of the iteration on the Chain.    
+		 * @param  {Function} Function A callback to handle the search.    
 		 */
-		this.Chain.map (Block => {
-
-			/**
-			 * Check if the current Block on the iteration has the given Name.
-			 * @param  {String} Block.Name The name of the Block.
-			 * @return {Object}            The Block informations.
-			 */
-			if (Block.Name === Name) {
-
-				BlockFound = Block;
-				Found = true;
-			}
-		});
+		this.Chain.reduce ((PreviousValue, Block) => (Block.Name === Name ? BlocksFound.push (Block) : false));
 
 
 		/**
-		 * Return what was found, the Block or nothing.
+		 * Return the last Block found, the Block or nothing.
 		 * @type {Object/Null}
 		 */
-		return (Found === true ? BlockFound : null);
+		return (BlocksFound.length > 0 ? BlocksFound[BlocksFound.length - 1] : null);
 	}
 
 	///////////////////////////////////////////////////////////////
@@ -241,7 +223,7 @@ class Chain {
 	 * Make the Chain file saving in the path based on the Chain 
 	 * name in a ChainDB name file.
 	 * 
-	 * @return {Error}	Tell the Error that occurred.
+	 * @return {Error} Tell the Error that occurred.
 	 */
 	__MakeChainFile__ () {
 
@@ -326,7 +308,7 @@ class Chain {
 
 		/**
 		 * If the Chain has Blocks, return the hash of the last Block in the Chain.
-		 * If the Chain has no Blocks, return the PreviousBlockHash.
+		 * If the Chain has no Blocks, return the GENESIS_BLOCK_HASH.
 		 */
 		return (this.Chain.length > 0 ? 
 			this.Chain [this.Chain.length - 1].CurrentBlockHash : GENESIS_BLOCK_HASH);
