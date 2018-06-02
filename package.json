@@ -1,5 +1,5 @@
 {
-  "name": "chaindb",
+  "name": "chain-db",
   "version": "1.0.0",
   "description": "A noSQL database based on blockchain tecnology",
   "main": "index.js",
