@@ -55,7 +55,7 @@ class Block {
 		 * The timestamp of this Block.
 		 * @type {String}
 		 */
-		this.TimeStamp = new Date ().toLocaleString ();
+		this.TimeStamp = new Date ().toLocaleTimeString ();
 	}
 
 	/**
