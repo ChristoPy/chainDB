@@ -6,6 +6,16 @@
   "scripts": {
     "test": "node Tests/index.js"
   },
+  "keywords": [
+    "nosql-databases",
+    "nosql",
+    "blockchain",
+    "blockchain-tecnology",
+    "database",
+    "databases",
+    "block",
+    "blocks"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ChristoPy/chainDB.git"
