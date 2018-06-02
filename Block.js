@@ -50,13 +50,13 @@ class Block {
 		 * The data to be stored.
 		 * @type {String}
 		 */
-		this.Content = JSON.stringify (Content);
+		this.Content = Content;
 
 		/**
 		 * The timestamp of this Block.
 		 * @type {String}
 		 */
-		this.TimeStamp = JSON.stringify (new Date ());
+		this.TimeStamp = new Date ().toLocaleString ();
 	}
 
 	/**
@@ -103,7 +103,7 @@ class Block {
 		 * Set the Block Content based on the EncodedContent and puting inside an object.
 		 * @type {Object}
 		 */
-		this.Content = BF.encode (this.Content);
+		this.Content = BF.encode (JSON.stringify (this.Content));
 	}
 
 	/**
