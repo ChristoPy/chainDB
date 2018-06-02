@@ -11,7 +11,7 @@ chainDB is noSQL database based on blockchain tecnology. It's purpose is to make
 ## Creating a Chain
 ```js
 // Get chainDB.
-const Chain = require ("chaindb");
+const Chain = require ("@christopy/chaindb");
 
 // Create the Chain.
 Chain.New ("My DB Name");
