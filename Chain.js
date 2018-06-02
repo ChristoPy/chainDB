@@ -26,7 +26,7 @@ const Path = require ("path");
 
 
 /**
- * Set a constant to be used as Genesis Block Hash to the first block added to each DB.
+ * Set a constant to be used as Genesis Block Hash to the first block added to each Chain.
  * @type {String}
  */
 const GENESIS_BLOCK_HASH = Hash.sha256 ().update ("chainDB").digest ("hex");
@@ -40,18 +40,16 @@ class Chain {
 
 	/**
 	 * Configure an empty Chain and the name of it.
-	 * 
 	 * @param  {String} ChainName The name of the Chain.
 	 * @return {Object} Return the configured Chain object.
 	 */
 	constructor (ChainName) {
 
 		/**
-		 * Check if ChainName was given, setting every needed stuff wo use the Chain.
+		 * Check if ChainName was given, setting every needed stuff we use the Chain.
 		 * If isn't, throw an error.
-		 * 
 		 * @param  {String} ChainName ChainName The name of the Chain.
-		 * @return {Array}			The this.Chain definition, empty or not.
+		 * @return {Array}			The Chain, empty or not.
 		 */
 		if (ChainName) {
 
@@ -62,7 +60,7 @@ class Chain {
 			this.Chain = [];
 
 			/**
-			 * The Name of the Chain, used to store the DB in a path with the Chain name.
+			 * The Name of the Chain, used to store the Chain in a path with the Chain name.
 			 * @type {String}
 			 */
 			this.ChainName = ChainName;
@@ -70,8 +68,8 @@ class Chain {
 
 
 			/**
-			 * Check if a Chain with the same name as ChainName exists, load if exists and
-			 * merge the DB data with this Chain data.
+			 * Check if a Chain with the same name as ChainName exists, load it if exists and
+			 * merge the Chain data with this Chain data.
 			 */
 			this.__CheckChainFileExistence__ (ChainName);
 		}
@@ -90,7 +88,6 @@ class Chain {
 	/**
 	 * Create the Chain path if it doesn't exists.
 	 * Create a new Block and encrypt it's content.
-	 * 
 	 * @param {String} Name The Name of the Block.
 	 * @param {Any} Content The data to be stored in the Block.
 	 */
@@ -111,7 +108,7 @@ class Chain {
 		this.CurrentBlock = new Block (Name, this.__PreviousBlockHash__, Content);
 
 		/**
-		 * Generate the Hash of this Block.
+		 * Generate the Hash of the Block.
 		 */
 		this.CurrentBlock.GenBlockHash ();
 
@@ -128,66 +125,108 @@ class Chain {
 		});
 
 		/**
-		 * Save the Block to the Chain.
+		 * Save the Block in the Chain.
 		 */
-		this.SaveBlock ();
+		this.__MakeBlockFile__ ();
 	}
 
-	/**
-	 * Save the Block to the Chain path, using the Block hash as the name of the file.
-	 */
-	SaveBlock () {
-
-		/**
-		 * Try create the Block file name inside the path of the Chain with the name
-		 * based on the hash of it.
-		 * If it fails, throw the Error.
-		 */
-		try {
-
-			FS.writeFileSync (`${this.ChainName}/${this.CurrentBlock.CurrentHash}`, 
-				this.CurrentBlock.Content, "utf-8");
-		}
-		catch (SomeError) {
-
-			throw (SomeError);
-		}
-
-		/**
-		 * After save the Block to the Chain at your path, update the Chain file.
-		 */
-		this.__MakeChainFile__ ();
-	}
 
 	/**
-	 * Get a Block based on your Name.
-	 * 
-	 * @param {String} Name The Name of the Block.
-	 * @return {Object/Null} Return the Block that's been found or null if not.
+	 * Get all Blocks, or the first Block found or the last Block found 
+	 * in the Chain based on it's name.
+	 * @param {String}  BlockName The name of the Block.
+	 * @param {Boolean} Return    What will be returned, the last Block of all, all Blocks or the first one.
+	 * @return {Array/OBject/Null}	All blocks, one Block or nothing.
 	 */
-	GetBlock (Name) {
+	Get (BlockName, Return = "All") {
 
 		/**
-		 * Where store all blocks that was found.
+		 * Store all possibilities to get Blocks.
 		 * @type {Array}
 		 */
-		let BlocksFound = [];
+		const ReturnPossibilities = ["All", "Last", "First"];
 
 
 		/**
-		 * Walk inside this Chain and check if the given Name deserves to any Blocks, 
-		 * telling the Block that was found.
-		 * 
-		 * @param  {Function} Function A callback to handle the search.    
+		 * Check if the especified Block(s) to be returned is okay.
+		 * @param  {String} ReturnPossibilities[Return] A possibility to get Blocks.
+		 * @return {Array/Object}                       All the especified Blocks or the especified Block.
 		 */
-		this.Chain.reduce ((PreviousValue, Block) => (Block.Name === Name ? BlocksFound.push (Block) : false));
+		if (ReturnPossibilities.indexOf (Return)) {
+
+			/**
+			 * Where store all blocks that was found.
+			 * @type {Array}
+			 */
+			let BlocksFound = [];
 
 
-		/**
-		 * Return the last Block found, the Block or nothing.
-		 * @type {Object/Null}
-		 */
-		return (BlocksFound.length > 0 ? BlocksFound[BlocksFound.length - 1] : null);
+			/**
+			 * Search this Chain and check if the given Name deserves to any Blocks, 
+			 * telling the Block that was found.
+			 * @param {Function} Function A callback to handle the search.
+			 */
+			this.Chain.reduce ((PreviousValue, ChainBlock) => {
+
+				// Skip other Blocks if the first was found.
+				if (BlocksFound.length > 0 && Return === "First") {
+
+					return false;
+
+				} else {
+
+					/**
+					 * Add to BlocksFound the Block that has the same name as the specified.
+					 * @type {Object}
+					 */
+					return (ChainBlock.Name === BlockName ? BlocksFound.push (ChainBlock) : false);
+				}
+			});
+
+
+			/**
+			 * Return the requested Block(s).
+			 * @param  {String} Return What will be returned, the last Block of all, all Blocks or the first one.
+			 * @return {Array/Object/Null}        
+			 */
+			switch (Return) {
+
+				/**
+				 * Return Blocks found or nothing.
+				 * @type {Array/Null}
+				 */
+				case "All":
+					return (BlocksFound.length > 0 ? BlocksFound : null);
+					break;
+
+				/**
+				 * Return the last Block found or nothing.
+				 * @type {Object/Null}
+				 */
+				case "Last":
+					return (BlocksFound.length > 0 ? BlocksFound[BlocksFound.length - 1] : null);
+					break;
+
+				/**
+				 * Return the first Block found or nothing.
+				 * @type {Object/Null}
+				 */
+				case "First":
+					return (BlocksFound.length > 0 ? BlocksFound[0] : null);
+					break;
+
+				/**
+				 * Return nothing.
+				 * @type {Null}
+				 */
+				default:
+					return null;
+			}
+
+		} else {
+
+			throw new Error ("To Get One Or More Blocks The Quantity Must Be Given.");
+		}
 	}
 
 	///////////////////////////////////////////////////////////////
@@ -197,14 +236,13 @@ class Chain {
 
 	/**
 	 * Make the path for the Chain.
-	 * 
-	 * @return {Error} If the path exists, it throws an error.
+	 * @return {Error} Except if the path exists, throws an error.
 	 */
 	__MakeChainPath__ () {
 
 		/**
 		 * Try create the path using the name of the Chain.
-		 * If it fails, except if the file exists, throw the Error.
+		 * If it fails, except if the path exists, throw the Error.
 		 */
 		try {
 
@@ -222,7 +260,6 @@ class Chain {
 	/**
 	 * Make the Chain file saving in the path based on the Chain 
 	 * name in a ChainDB name file.
-	 * 
 	 * @return {Error} Tell the Error that occurred.
 	 */
 	__MakeChainFile__ () {
@@ -243,8 +280,7 @@ class Chain {
 	}
 
 	/**
-	 * Get the Chain file at your path based on your name and return it as an Array.
-	 * 
+	 * Get the Chain file at your path based on your name and return it as an String.
 	 * @param  {String} ChainName The name of the Chain.
 	 * @return {Error}	Tell the Error that occurred.
 	 */
@@ -257,7 +293,7 @@ class Chain {
 
 
 		/**
-		 * Try read the Chain file at your path and assing it to the Chain variable.
+		 * Try read the Chain file at your path and assign it to the Chain variable.
 		 * If it fails, throw the Error.
 		 */
 		try {
@@ -273,9 +309,8 @@ class Chain {
 		/**
 		 * If the Chain variable exists, assign this Chain to the Chain variable 
 		 * after convert it to an Object.
-		 * 
 		 * @param  {Undefined/String} Chain The Chain file content.
-		 * @return {Object}       The Chain file content.
+		 * @return {Object}       The parsed Chain file content.
 		 */
 		if (Chain) {
 
@@ -294,6 +329,74 @@ class Chain {
 	}
 
 
+
+	/**
+	 * Get the Block file at your path based on your name and return it as Buffer.
+	 * @param  {String} BlockHash The hash of the Block.
+	 * @return {Buffer/Error}	Tell the Error that occurred.
+	 */
+	___GetBlockFile__ (BlockHash) {
+
+		/**
+		 * Small helper variable.
+		 */
+		let Block;
+
+
+		/**
+		 * Try read the Block file at your Chain path and assign it to the Block variable.
+		 * If it fails, throw the Error.
+		 */
+		try {
+
+			Block = FS.readFileSync (`./${this.ChainName}/${BlockHash}`);
+		}
+		catch (SomeError) {
+
+			throw (SomeError);
+		}
+
+
+		/**
+		 * If the Block variable exists, assign it to the Block variable.
+		 * @param  {Undefined/String} Block The Block file content.
+		 * @return {Object}       	  The Block file content.
+		 */
+		if (Block) {
+
+			return Block;
+		}
+	}
+
+
+	/**
+	 * Save the Block to the Chain path, using the Block hash as the file name.
+	 * @return {Error} Tell the Error that occurred.
+	 */
+	__MakeBlockFile__ () {
+
+		/**
+		 * Try create the Block file name inside the path of the Chain with the name
+		 * based on the hash of it.
+		 * If it fails, throw the Error.
+		 */
+		try {
+
+			FS.writeFileSync (`${this.ChainName}/${this.CurrentBlock.CurrentHash}`, 
+				JSON.stringify (this.CurrentBlock.Content));
+		}
+		catch (SomeError) {
+
+			throw (SomeError);
+		}
+
+		/**
+		 * After save the Block to the Chain at your path, updating the Chain file.
+		 */
+		this.__MakeChainFile__ ();
+	}
+
+
 	//////////////////////////////////////////////////////////////
 	// 						Helpers 							//
 	//////////////////////////////////////////////////////////////
@@ -301,7 +404,6 @@ class Chain {
 
 	/**
 	 * Get the hash of the previous Block in the Chain.
-	 * 
 	 * @return {String} The Hash of the previous Block.
 	 */
 	get __PreviousBlockHash__ () {
@@ -312,6 +414,46 @@ class Chain {
 		 */
 		return (this.Chain.length > 0 ? 
 			this.Chain [this.Chain.length - 1].CurrentBlockHash : GENESIS_BLOCK_HASH);
+	}
+
+	/**
+	 * Get a Block and decrypt your Content.
+	 * @param  {Object} ChainBlock The Block to be decrypted.
+	 * @return {Object/Error}            The Decrypted Block or an Error if no Block be given.
+	 */
+	__DecryptBlock__ (ChainBlock) {
+
+		/**
+		 * If the ChainBlock don't be given, throw an Error.
+		 */
+		if (!ChainBlock) throw new Error ("A Block Must Be Given To Be Decrypted.");
+
+
+		/**
+		 * Create a new Block based on the known informations.
+		 * @type {Block}
+		 */
+		const DecryptedBlock = new Block (ChainBlock.Name, ChainBlock.PreviousBlockHash, 
+			this.___GetBlockFile__ (ChainBlock.CurrentBlockHash));
+
+		/**
+		 * Set the DecryptedBlock needed informations based on the known informations.
+		 */
+		DecryptedBlock.CurrentHash = ChainBlock.CurrentBlockHash;
+
+
+		/**
+		 * Decrypt the Block content.
+		 */
+		DecryptedBlock.__DecryptBlockContent__ ();
+
+
+
+		/**
+		 * Return the decrypted Block.
+		 * @type {Object}
+		 */
+		return DecryptedBlock;
 	}
 }
 
