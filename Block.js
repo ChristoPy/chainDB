@@ -100,16 +100,10 @@ class Block {
 		BF.setIv (this.PreviousHash.slice (0, 8));
 
 		/**
-		 * Encode the content of this Block and convert it to a JSON String.
-		 * @type {String}
-		 */
-		const EncodedContent = JSON.stringify (BF.encode (this.Content));
-
-		/**
 		 * Set the Block Content based on the EncodedContent and puting inside an object.
 		 * @type {Object}
 		 */
-		this.Content = JSON.stringify ({Content: EncodedContent});
+		this.Content = BF.encode (this.Content);
 	}
 
 	/**
@@ -135,7 +129,7 @@ class Block {
 		 * Return the uncrypted Block Content.
 		 * @type {Object}
 		 */
-		return BF.decode (this.Content.Content, BlowFish.TYPE.STRING);
+		return BF.decode (this.Content, BlowFish.TYPE.STRING);
 	}
 }
 
