@@ -2,50 +2,54 @@
  * Get chainDB.
  * @type {Object}
  */
-const Chain = require ("./../Chain.js");
+const Chain = require ("./../index.js");
+
+/**
+ * Create a Chain.
+ */
+Chain.New ("Example");
+
+/**
+ * Add two Blocks inside it.
+ */
+Chain.AddBlock ("Standard Title", "lorem ipsum");
+Chain.AddBlock ("Standard Title inside an Array", ["lorem ipsum"]);
+
+/**
+ * Add two another blocks with the same Name as before.
+ */
+Chain.AddBlock ("Standard Title", "123");
+Chain.AddBlock ("Standard Title inside an Array", ["123"]);
 
 
 /**
- * Create an empty Chain.
- * @type {Chain}
+ * Get the first Block with the name as "Standard Title inside an Array";
  */
-const MyChain0 = new Chain ("Test");
+console.log (Chain.GetFirstBlock ("Standard Title inside an Array"));
 
 /**
- * Add Blocks to the created Chain.
+ * Get the last Block with the name as "Standard Title inside an Array";
  */
-MyChain0.NewBlock ("Standard Title", "lorem ipsum");
-MyChain0.NewBlock ("Standard Title inside an Array", ["lorem ipsum"]);
-MyChain0.NewBlock ("Zero", 0);
-MyChain0.NewBlock ("Zero to 3.1 inside an Array", [0, 1, 2, 3.1]);
-MyChain0.NewBlock ("Object with the same data as before", {
-	0: "lorem ipsum",
-	1: ["lorem ipsum"],
-	2: 0,
-	3: [0, 1, 2, 3.1]
-});
+console.log (Chain.GetLastBlock ("Standard Title inside an Array"));
+
+/**
+ * Get all Blocks with the name as "Standard Title inside an Array";
+ */
+console.log (Chain.GetAllBlocks ("Standard Title inside an Array"));
+
 
 
 /**
- * Create a Chain with the same Blocks as MyChain0.
- * @type {Chain}
+ * Get the first Block with the name as "Standard Title";
  */
-const MyChain1 = new Chain ("Test");
+console.log (Chain.GetFirstBlock ("Standard Title"));
 
 /**
- * Add a Block to the Chain "Test".
+ * Get the last Block with the name as "Standard Title";
  */
-MyChain1.NewBlock ("I'm New Here!", "some new data");
-
-
-/**
- * Should return the Block on the Chain.
- * TO DO:
- * 	Returns null, the Block is on the Chain but not referenced on MyChain0.
- */
-console.log (MyChain0.Get ("I'm New Here!", "First"));
+console.log (Chain.GetLastBlock ("Standard Title"));
 
 /**
- * Get the Block on the Chain and decrypt your Content.
+ * Get all Blocks with the name as "Standard Title";
  */
-console.log (MyChain1.__DecryptBlock__ (MyChain1.Get ("I'm New Here!", "Last")));
+console.log (Chain.GetAllBlocks ("Standard Title"));
