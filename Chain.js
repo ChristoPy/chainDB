@@ -152,7 +152,7 @@ class Chain {
 		 * @param  {String} ReturnPossibilities[Return] A possibility to get Blocks.
 		 * @return {Array/Object}                       All the especified Blocks or the especified Block.
 		 */
-		if (ReturnPossibilities.indexOf (Return)) {
+		if (ReturnPossibilities.includes (Return)) {
 
 			/**
 			 * Where store all blocks that was found.
@@ -190,6 +190,7 @@ class Chain {
 			 * @return {Array/Object/Null}        
 			 */
 			switch (Return) {
+
 
 				/**
 				 * Return Blocks found or nothing.
