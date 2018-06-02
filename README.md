@@ -5,7 +5,7 @@ chainDB is noSQL database based on blockchain tecnology. It's purpose is to make
 
 
 ## Installation
-```npm install chaindb --save```
+```npm install @christopy/chaindb --save```
 
 
 ## Creating a Chain
