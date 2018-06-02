@@ -43,9 +43,9 @@ MyChain1.NewBlock ("I'm New Here!", "some new data");
  * TO DO:
  * 	Returns null, the Block is on the Chain but not referenced on MyChain0.
  */
-// console.log (MyChain0.GetBlock ("I'm New Here!"));
+console.log (MyChain0.Get ("I'm New Here!"));
 
 /**
- * Return the Block on the Chain.
+ * Get the Block on the Chain and decrypt your Content.
  */
-console.log (MyChain1.GetBlock ("I'm New Here!"));
+console.log (MyChain1.__DecryptBlock__ (MyChain1.Get ("I'm New Here!", "Last")));
