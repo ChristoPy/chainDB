@@ -13,38 +13,37 @@ const BlowFish = require ("egoroof-blowfish");
 
 
 /**
- * Main Block class, hold the block structure and a few methods.
+ * Main Block class, configure the block structure and a few methods.
  */
 class Block {
 
 	/**
 	 * Instantiate the class, defining: previous hash, genesis block hash,
-	 * the hash of this Block, the content and the timeStamp.
-	 * 
+	 * the hash of this Block, the content and the timestamp.
 	 * @param  {String} Name The Name of the Block.
-	 * @param  {String} PreviousHash The Hash used by the last Block.
+	 * @param  {String} PreviousHash The Hash used by the Block before this.
 	 * @param  {String} Content      The data to be stored.
 	 * @return {Object}              Return the configured Block object.
 	 */
 	constructor (Name, PreviousHash, Content) {
 
 		/**
-		 * The name of this Block.
+		 * The Name of the Block.
 		 * @type {String}
 		 */
 		this.Name = Name;
 
 		/**
-		 * The hash used in the last Block.
+		 * The Hash used by the Block before this.
 		 * @type {String}
 		 */
 		this.PreviousHash = PreviousHash;
 
 		/**
-		 * The hash of this Block.
+		 * The hash of the Block.
 		 * @type {String}
 		 */
-		this.CurrentHash = undefined;
+		this.CurrentHash;
 
 		/**
 		 * The data to be stored.
@@ -60,12 +59,12 @@ class Block {
 	}
 
 	/**
-	 * Generate the Hash of this Block based on the Content, PreviousHash and the TimeStamp.
+	 * Generate the Hash of the Block based on the Content, PreviousHash and TimeStamp.
 	 */
 	GenBlockHash () {
 
 		/**
-		 * Encrypt the conent of the Block.
+		 * Encrypt the content of the Block.
 		 */
 		this.__EncryptBlockContent__ ();
 
@@ -84,12 +83,12 @@ class Block {
 
 	/**
 	 * Encrypt the content of the block to 8 bit Array using the first 8 bits 
-	 * of the PreviousHash.
+	 * of PreviousHash.
 	 */
 	__EncryptBlockContent__ () {
 
 		/**
-		 * Set the BlowFish with the PreviousHash as key, the ECB mode and the padding to null.
+		 * Set the BlowFish with the PreviousHash as key, the mode to ECB and the padding to null.
 		 * @type {Object}
 		 */
 		const BF = new BlowFish (this.PreviousHash, BlowFish.MODE.ECB, BlowFish.PADDING.NULL);
@@ -100,36 +99,33 @@ class Block {
 		BF.setIv (this.PreviousHash.slice (0, 8));
 
 		/**
-		 * Set the Block Content based on the EncodedContent and puting inside an object.
-		 * @type {Object}
+		 * Encode the Content.
+		 * @type {String}
 		 */
 		this.Content = BF.encode (JSON.stringify (this.Content));
 	}
 
 	/**
 	 * Decrypt the Block Content.
-	 * @return {String} The content of the Block as String.
 	 */
 	__DecryptBlockContent__ () {
 
 		/**
-		 * Set the BlowFish with the PreviousHash as key, the ECB mode and the padding to null.
+		 * Set the BlowFish with the PreviousHash as key, the mode to ECB and the padding to null.
 		 * @type {BlowFish}
 		 */
-		const BF = new BlowFish (this.PreviousHash, 
-			BlowFish.MODE.ECB, BlowFish.PADDING.NULL);
+		const BF = new BlowFish (this.PreviousHash, BlowFish.MODE.ECB, BlowFish.PADDING.NULL);
 
 		/**
-		 * Set the BlowFish iV to the first 8 bits in PreviousHash.
+		 * Set the BlowFish Iv to the first 8 bits in PreviousHash.
 		 */
 		BF.setIv (this.PreviousHash.slice (0, 8));
 
-
 		/**
-		 * Return the uncrypted Block Content.
-		 * @type {Object}
+		 * Decode the Content.
+		 * @type {String}
 		 */
-		return BF.decode (this.Content, BlowFish.TYPE.STRING);
+		this.Content = BF.decode (Uint8Array.from (Object.values (JSON.parse (this.Content))), BlowFish.TYPE.STRING);
 	}
 }
 
