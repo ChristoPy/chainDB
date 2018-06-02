@@ -155,42 +155,18 @@ class Chain {
 		if (ReturnPossibilities.includes (Return)) {
 
 			/**
-			 * Where store all blocks that was found.
-			 * @type {Array}
-			 */
-			let BlocksFound = [];
-
-
-			/**
-			 * Search this Chain and check if the given Name deserves to any Blocks, 
-			 * telling the Block that was found.
+			 * Search this Chain and pick all Blocks that match with the received name.
 			 * @param {Function} Function A callback to handle the search.
 			 */
-			this.Chain.reduce ((PreviousValue, ChainBlock) => {
-
-				// Skip other Blocks if the first was found.
-				if (BlocksFound.length > 0 && Return === "First") {
-
-					return false;
-
-				} else {
-
-					/**
-					 * Add to BlocksFound the Block that has the same name as the specified.
-					 * @type {Object}
-					 */
-					return (ChainBlock.Name === BlockName ? BlocksFound.push (ChainBlock) : false);
-				}
-			});
+			let BlocksFound = this.Chain.filter (ChainBlock => ChainBlock.Name === BlockName);
 
 
 			/**
 			 * Return the requested Block(s).
 			 * @param  {String} Return What will be returned, the last Block of all, all Blocks or the first one.
-			 * @return {Array/Object/Null}        
+			 * @return {Array/Object/Null}
 			 */
 			switch (Return) {
-
 
 				/**
 				 * Return Blocks found or nothing.
