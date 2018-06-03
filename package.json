@@ -1,5 +1,5 @@
 {
-  "name": "@christopy/chaindb",
+  "name": "chainDB",
   "version": "1.0.1",
   "description": "A noSQL database based on blockchain tecnology",
   "main": "index.js",
