@@ -178,7 +178,7 @@ class Chain {
 			else {
 
 				return null
-			};
+			}
 
 		} else {
 
