@@ -166,39 +166,19 @@ class Chain {
 			 * @param  {String} Return What will be returned, the last Block of all, all Blocks or the first one.
 			 * @return {Array/Object/Null}
 			 */
-			switch (Return) {
+			if (Return === "All") {
 
-				/**
-				 * Return Blocks found or nothing.
-				 * @type {Array/Null}
-				 */
-				case "All":
-					return (BlocksFound.length > 0 ? BlocksFound : null);
-					break;
+				return (BlocksFound.length > 0 ? BlocksFound : null)}
+			else if (Return === "Last") {
 
-				/**
-				 * Return the last Block found or nothing.
-				 * @type {Object/Null}
-				 */
-				case "Last":
-					return (BlocksFound.length > 0 ? BlocksFound[BlocksFound.length - 1] : null);
-					break;
+				return (BlocksFound.length > 0 ? BlocksFound[BlocksFound.length - 1] : null)}
+			else if (Return === "First") {
 
-				/**
-				 * Return the first Block found or nothing.
-				 * @type {Object/Null}
-				 */
-				case "First":
-					return (BlocksFound.length > 0 ? BlocksFound[0] : null);
-					break;
+				return (BlocksFound.length > 0 ? BlocksFound[0] : null)}
+			else {
 
-				/**
-				 * Return nothing.
-				 * @type {Null}
-				 */
-				default:
-					return null;
-			}
+				return null
+			};
 
 		} else {
 
