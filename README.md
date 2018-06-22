@@ -3,6 +3,7 @@
 
 chainDB is noSQL database based on blockchain tecnology. It's purpose is to make simple store data using an append only system. Wich also lets access the Blocks of the chain and read your content.
 
+[![CodeFactor](https://www.codefactor.io/repository/github/christopy/chaindb/badge/master)](https://www.codefactor.io/repository/github/christopy/chaindb/overview/master)
 
 ## Installation
 ```npm install @christopy/chaindb --save```
