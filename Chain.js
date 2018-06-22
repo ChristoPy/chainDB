@@ -275,7 +275,7 @@ class Chain {
 		 */
 		try {
 
-			Chain = FS.readFileSync (`./${this.ChainName}/chainDB`, {encoding: "utf-8"});
+			Chain = FS.readFileSync (`./${ChainName}/chainDB`, {encoding: "utf-8"});
 		}
 		catch (SomeError) {
 
