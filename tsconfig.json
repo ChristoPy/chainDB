@@ -2,7 +2,7 @@
     "compilerOptions": {
         "module": "commonjs",
         "moduleResolution": "node",
-        "baseUrl": "Source",
+        "baseUrl": ".",
         "outDir": "Distribution"
     }
 }
