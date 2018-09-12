@@ -3,7 +3,7 @@ import * as Path from "path";
 import Block from './Block';
 
 
-class Chain {
+export default class Chain {
 
 	public Name:string;
 	public Chain = [];
