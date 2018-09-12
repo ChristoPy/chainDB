@@ -116,14 +116,3 @@ class Chain {
 		return this.Chain.length > 0 ? this.Chain [this.Chain.length - 1].CurrentBlockHash : null;
 	}
 }
-
-const MyChain = new Chain ("flidjsifldskfj");
-MyChain.NewBlock ("Test", "kkkkkkkk");
-MyChain.NewBlock ("Test", "kkkkkkkk");
-
-// MyChain.Get ("Test", "fngjfdngdfjgn")
-MyChain.Get ("Test", "all")
-MyChain.Get ("Test", "first")
-MyChain.Get ("Test", "last")
-
-console.log (MyChain.Chain)
