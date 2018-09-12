@@ -13,13 +13,11 @@ class Chain {
 
 		if (!Name) {
 
-			throw new Error ("The ChainName Must Be Given.");
+			throw new Error ("The chain must have a name.");
 		}
 
 		this.Name = Name;
 		this.__CheckChainFileExistence__ ();
-
-		console.log (this.Chain);
 	}
 
 	public NewBlock (Name:string, Content:any):void {
@@ -91,7 +89,6 @@ class Chain {
 		}
 	}
 
-	// Content comes stringified!!!
 	private __MakeFile__ (FileName:any, Content:string, Encode:any = "utf-8"):any {
 
 		try {
