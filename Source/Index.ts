@@ -30,11 +30,6 @@ class chainDB {
 
 		return this.DB.GetBlock (Name);
 	}
-
-	public DecryptBlock (Block:any) {
-
-		return this.DB.DecryptBlock (Block);
-	}
 }
 
 export = new chainDB ();

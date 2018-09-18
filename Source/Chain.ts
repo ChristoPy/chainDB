@@ -51,13 +51,13 @@ export default class Chain {
 
 		switch (Return) {
 
-			case "first": return Found[0]
-			case "last": return Found[Found.length-1];
-			default: return Found;
+			case "first": return this.__DecryptBlock__ (Found[0]);
+			case "last": return this.__DecryptBlock__ (Found[Found.length-1]);
+			default: return Found.map (BlockFound => JSON.parse (this.__DecryptBlock__ (BlockFound)));
 		}
 	}
 
-	public DecryptBlock (BlockData:any) {
+	public __DecryptBlock__ (BlockData:any) {
 
 		if (!BlockData) {
 
