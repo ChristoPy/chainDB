@@ -39,7 +39,7 @@ export default class Chain {
 		this.__MakeFile__ ("chainDB", JSON.stringify (this.Chain));
 	}
 
-	public Get (BlockName:String, Return:String = "all") {
+	public GetBlock (BlockName:String, Return:String = "all") {
 
 		const ReturnEspecification:any = ["all", "last", "first"];
 		const Found = this.Chain.filter (Block => Block.Name === BlockName);

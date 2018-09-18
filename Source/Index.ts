@@ -18,17 +18,17 @@ class chainDB {
 
 	public GetFirstBlock (Name:string):void {
 
-		return this.DB.Get (Name, "First");
+		return this.DB.GetBlock (Name, "First");
 	}
 
 	public GetLastBlock (Name:string):void {
 
-		return this.DB.Get (Name, "Last");
+		return this.DB.GetBlock (Name, "Last");
 	}
 
 	public GetAllBlocks (Name:string):void {
 
-		return this.DB.Get (Name);
+		return this.DB.GetBlock (Name);
 	}
 }
 
