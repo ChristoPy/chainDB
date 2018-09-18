@@ -57,6 +57,21 @@ export default class Chain {
 		}
 	}
 
+	public DecryptBlock (BlockData:any) {
+
+		if (!BlockData) {
+
+			throw new Error ("A Block Must Be Given To Be Decrypted.");
+		}
+
+		const BlockDataContent = this.__GetFile__ (BlockData.CurrentBlockHash);
+
+		const DecryptedBlock = new Block (BlockData.Name, BlockDataContent, BlockData.PreviousBlockHash);
+		DecryptedBlock.BlockHash = BlockData.CurrentBlockHash;
+
+		return DecryptedBlock.Decrypt ();
+	}
+
 	private __MakeChainPath__ ():void {
 
 		try {

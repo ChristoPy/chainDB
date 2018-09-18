@@ -28,7 +28,7 @@ export default class Block {
 
 	Decrypt ():void {
 
-		this.__DecryptBlockContent__ ();
+		return this.__DecryptBlockContent__ ();
 	}
 
 	private __CalculateHash__ ():void {
