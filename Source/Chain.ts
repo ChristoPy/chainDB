@@ -17,7 +17,7 @@ export default class Chain {
 		}
 
 		this.Name = Name;
-		this.__CheckChainFileExistence__ ();
+		this.Chain = (FS.existsSync (`./${this.Name}/chainDB`) ? this.__GetFile__ ("chainDB", true) : []);
 	}
 
 	public NewBlock (Name:string, Content:any):void {
@@ -99,15 +99,6 @@ export default class Chain {
 		}
 	}
 
-	private __CheckChainFileExistence__ ():any {
-
-		const Chain = (FS.existsSync (`./${this.Name}/chainDB`) ? this.__GetFile__ ("chainDB", true) : []);
-
-		if (Chain) {
-			
-			this.Chain = Chain;
-		}
-	}
 	private __PreviousBlockHash__ ():any {
 
 		return this.Chain.length > 0 ? this.Chain [this.Chain.length - 1].CurrentBlockHash : null;
