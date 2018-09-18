@@ -4,7 +4,8 @@
   "description": "A noSQL database based on blockchain tecnology",
   "main": "index.js",
   "scripts": {
-    "test": "node Tests/index.js"
+    "test": "node Tests/index.js",
+    "build": "tsc --build tsconfig.json"
   },
   "keywords": [
     "nosql-databases",
