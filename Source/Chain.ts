@@ -1,6 +1,7 @@
 import * as FS from "fs";
 import * as Path from "path";
 import Block from './Block';
+import * as OS from "os";
 
 
 export default class Chain {
@@ -8,6 +9,7 @@ export default class Chain {
 	public Name:string;
 	public Chain = [];
 	private CurrentBlock:Block;
+	private __DBPath__:string;
 
 	constructor (Name:string) {
 
@@ -17,12 +19,13 @@ export default class Chain {
 		}
 
 		this.Name = Name;
-		this.Chain = (FS.existsSync (`./${this.Name}/chainDB`) ? this.__GetFile__ ("chainDB", true) : []);
+		this.__DBPath__ = Path.join (OS.homedir (), `.chainDB/${this.Name}`);
+		this.Chain = (FS.existsSync (Path.join (this.__DBPath__, "chainDB")) ? this.__GetFile__ ("chainDB", true) : []);
+
+		this.__MakeChainPath__ ();
 	}
 
 	public NewBlock (Name:string, Content:any) {
-
-		this.__MakeChainPath__ ();
 
 		this.CurrentBlock = new Block (Name, Content, this.__PreviousBlockHash__ ());
 		this.CurrentBlock.Encrypt ();
@@ -76,7 +79,8 @@ export default class Chain {
 
 		try {
 
-			FS.mkdirSync (Path.resolve (`./${this.Name}`));
+			FS.mkdirSync (this.__DBPath__);
+
 		} catch (SomeError) {
 
 			if (SomeError.code !== "EEXIST") {
@@ -92,7 +96,7 @@ export default class Chain {
 
 		try {
 
-			File = FS.readFileSync (`./${this.Name}/${FileName}`, Encode);
+			File = FS.readFileSync (Path.join (this.__DBPath__, FileName), Encode);
 		} catch (SomeError) {
 
 			throw (SomeError);
@@ -107,7 +111,8 @@ export default class Chain {
 	private __MakeFile__ (FileName:any, Content:string, Encode:any = "utf-8"):any {
 
 		try {
-			FS.writeFileSync (`${this.Name}/${FileName}`, Content, Encode);
+
+			FS.writeFileSync (Path.join (this.__DBPath__, FileName), Content, Encode);
 		} catch (SomeError) {
 
 			throw (SomeError);

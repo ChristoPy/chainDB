@@ -1,6 +1,21 @@
-import Chain from './Chain';
+import * as FS from "fs";
+import * as Path from "path";
+import * as OS from "os";
+
+import Chain from "./Chain";
 
 
+try {
+
+	FS.mkdirSync (Path.join (OS.homedir (), ".chainDB"));
+
+} catch (SomeError) {
+
+	if (SomeError.code !== "EEXIST") {
+	
+		throw SomeError;
+	}
+}
 
 class chainDB {
 
