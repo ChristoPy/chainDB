@@ -16,16 +16,14 @@ export default class Block {
 
 		this.Name = Name;
 		this.PreviousBlockHash = PreviousBlockHash || GENESIS_BLOCK_HASH;
-		this.Content = JSON.stringify (Content);
+		this.Content = Content;
 		this.TimeStamp = new Date ().toLocaleTimeString ();
-
-		const ThingsToBeHashed = `${this.Name} - ${this.Content} - ${this.PreviousBlockHash} - ${this.TimeStamp}`;
-		this.BlockHash = Hash.sha256 ().update (ThingsToBeHashed).digest ("hex");
 	}
 
 	Encrypt ():void {
 
 		this.__EncryptBlockContent__ ();
+		this.__CalculateHash__ ();
 	}
 
 	Decrypt ():void {
@@ -33,10 +31,16 @@ export default class Block {
 		this.__DecryptBlockContent__ ();
 	}
 
+	private __CalculateHash__ ():void {
+
+		const ThingsToBeHashed = `${this.Name} - ${this.Content} - ${this.PreviousBlockHash} - ${this.TimeStamp}`;
+		this.BlockHash = Hash.sha256 ().update (ThingsToBeHashed).digest ("hex");
+	}
+
 	private __EncryptBlockContent__ ():void {
 
 		const BF = this.__ConfigureBlowFish__ ();
-		this.Content = BF.encode (this.Content);
+		this.Content = BF.encode (JSON.stringify (this.Content));
 	}
 
 	private __DecryptBlockContent__ ():void {
