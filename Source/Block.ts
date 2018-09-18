@@ -20,30 +20,30 @@ export default class Block {
 		this.TimeStamp = new Date ().toLocaleTimeString ();
 	}
 
-	Encrypt ():void {
+	Encrypt () {
 
 		this.__EncryptBlockContent__ ();
 		this.__CalculateHash__ ();
 	}
 
-	Decrypt ():void {
+	Decrypt ():any {
 
 		return this.__DecryptBlockContent__ ();
 	}
 
-	private __CalculateHash__ ():void {
+	private __CalculateHash__ () {
 
 		const ThingsToBeHashed = `${this.Name} - ${this.Content} - ${this.PreviousBlockHash} - ${this.TimeStamp}`;
 		this.BlockHash = Hash.sha256 ().update (ThingsToBeHashed).digest ("hex");
 	}
 
-	private __EncryptBlockContent__ ():void {
+	private __EncryptBlockContent__ () {
 
 		const BF = this.__ConfigureBlowFish__ ();
 		this.Content = BF.encode (JSON.stringify (this.Content));
 	}
 
-	private __DecryptBlockContent__ ():void {
+	private __DecryptBlockContent__ ():any {
 
 		const BF = this.__ConfigureBlowFish__ ();
 		return BF.decode (Uint8Array.from (Object["values"] (JSON.parse (this.Content))), BlowFish.TYPE.STRING);

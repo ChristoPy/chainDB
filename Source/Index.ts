@@ -1,4 +1,4 @@
-import Chain from "./Chain";
+import Chain from './Chain';
 
 
 
@@ -6,27 +6,27 @@ class chainDB {
 
 	public DB:Chain;
 
-	public New (Name:string):void {
+	public New (Name:string) {
 
 		this.DB = new Chain (Name);
 	}
 
-	public AddBlock (Name:string, Content:any):void {
+	public AddBlock (Name:string, Content:any) {
 
 		this.DB.NewBlock (Name, Content);
 	}
 
-	public GetFirstBlock (Name:string):void {
+	public GetFirstBlock (Name:string):object {
 
 		return this.DB.GetBlock (Name, "First");
 	}
 
-	public GetLastBlock (Name:string):void {
+	public GetLastBlock (Name:string):object {
 
 		return this.DB.GetBlock (Name, "Last");
 	}
 
-	public GetAllBlocks (Name:string):void {
+	public GetAllBlocks (Name:string):Array<any> {
 
 		return this.DB.GetBlock (Name);
 	}

@@ -20,7 +20,7 @@ export default class Chain {
 		this.Chain = (FS.existsSync (`./${this.Name}/chainDB`) ? this.__GetFile__ ("chainDB", true) : []);
 	}
 
-	public NewBlock (Name:string, Content:any):void {
+	public NewBlock (Name:string, Content:any) {
 
 		this.__MakeChainPath__ ();
 
