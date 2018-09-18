@@ -16,7 +16,7 @@ class chainDB {
 		this.DB.NewBlock (Name, Content);
 	}
 
-	public FirstLastBlock (Name:string):void {
+	public GetFirstBlock (Name:string):void {
 
 		return this.DB.Get (Name, "First");
 	}
