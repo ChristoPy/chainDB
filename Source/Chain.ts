@@ -49,7 +49,7 @@ export default class Chain {
 			return null;
 		}
 
-		switch (ReturnEspecification) {
+		switch (Return) {
 
 			case "first": return Found[0]
 			case "last": return Found[Found.length-1];
