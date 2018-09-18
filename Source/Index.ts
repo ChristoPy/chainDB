@@ -18,17 +18,22 @@ class chainDB {
 
 	public GetFirstBlock (Name:string):object {
 
-		return this.DB.GetBlock (Name, "First");
+		return this.DB.GetBlock (Name, "first");
 	}
 
 	public GetLastBlock (Name:string):object {
 
-		return this.DB.GetBlock (Name, "Last");
+		return this.DB.GetBlock (Name, "last");
 	}
 
 	public GetAllBlocks (Name:string):Array<any> {
 
 		return this.DB.GetBlock (Name);
+	}
+
+	public DecryptBlock (Block:any) {
+
+		return this.DB.DecryptBlock (Block);
 	}
 }
 
