@@ -64,7 +64,7 @@ const MyHeroes = Chain.All ("superheroes"); // null
 Why not blockchain?
 
 ## Version
-2.0.0
+2.0.1
 
 ## Thanks
 Icon made by [chanut](https://www.flaticon.com/authors/chanut "chanut") from www.flaticon.com 
