@@ -1,6 +1,6 @@
 {
   "name": "@christopy/chaindb",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A noSQL database based on blockchain technology",
   "main": "Distribution/Index.js",
   "scripts": {
@@ -15,7 +15,11 @@
     "database",
     "databases",
     "block",
-    "blocks"
+    "blocks",
+    "chaindb",
+    "chain",
+    "db",
+    "js"
   ],
   "repository": {
     "type": "git",
