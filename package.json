@@ -2,7 +2,7 @@
   "name": "@christopy/chaindb",
   "version": "2.0.0",
   "description": "A noSQL database based on blockchain technology",
-  "main": "index.js",
+  "main": "Distribution/Index.js",
   "scripts": {
     "test": "node Tests/index.js",
     "build": "tsc --build tsconfig.json"
