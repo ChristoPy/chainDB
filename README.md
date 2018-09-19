@@ -1,9 +1,15 @@
-# ![Logo](chainDB.svg "chainDB")
+<div style="text-align: center; margin: 30px 0;"><img src="chainDB.svg" alt="chainDB" style="max-width: 80%;"/></div>
 
+<div style="margin-bottom: 20px;">
+A noSQL database based on blockchain technology. It's purpose is to store data using a simple append only system (maybe a future way to edit Blocks?).
 
-chainDB is noSQL database based on blockchain tecnology. It's purpose is to make simple store data using an append only system. Wich also lets access the Blocks of the chain and read your content.
+<div style="margin-top: 10px;">
 
 [![CodeFactor](https://www.codefactor.io/repository/github/christopy/chaindb/badge/master)](https://www.codefactor.io/repository/github/christopy/chaindb/overview/master)
+
+</div>
+</div>
+
 
 ## Installation
 ```npm install @christopy/chaindb --save```
@@ -15,38 +21,50 @@ chainDB is noSQL database based on blockchain tecnology. It's purpose is to make
 const Chain = require ("@christopy/chaindb");
 
 // Create the Chain.
-Chain.New ("My DB Name");
+Chain.New ("My awesome blockchain DB");
 ```
 
 ## Adding Blocks
 To add a Block, just specify your name and your content.
 ```js
-// Add a Block with a name/title as "My First Block" and your content as "My First Content".
-Chain.AddBlock ("My First Block", "My First Content");
+// Add a Block with a title of "phrase" and your content as "lorem ipsum".
+Chain.Add ("phrase", "lorem ipsum");
 
-// Add a Block with a name/title as "My Second Block" and your content with an Object.
-Chain.AddBlock ("My Second Block", {MyContent: "My Second Content"});
+// Add a Block with a title of "user" and your content as an Object.
+Chain.Add ("user", {
+  name: "john",
+  last_name: "doe"
+});
 
-// This Block has the same name as above but isn't the same.
-Chain.AddBlock ("My Second Block", [1,2,3,4,5]);
+// Add a Block with a title of "user" and your content as an Object.
+Chain.Add ("user", {
+  username: "ChristoPy",
+  age: 19
+});
 ```
 
 ## Picking Blocks
-If the Chain has more than one Block with the same name, you can choose the Block(s) to be picked.
-If there is no Block(s) it returns null.
+To get Blocks, just specify your name and if you want the first, the last or all Blocks added with that name.
+If no Blocks where found, returns null.
 ```js
-// Get the first Block added to the Chain with "My Second Block" as your name.
-const MySecondBlock = Chain.GetFirstBlock ("My Second Block");
+// Get the first Block added to the Chain with "user" as your name.
+const MySecondBlock = Chain.First ("user"); // {name: "john", last_name: "doe"}
 
-// Get the last Block added to the Chain with "My Second Block" as your name.
-const MySecondBlock = Chain.GetLastBlock ("My Second Block");
+// Get the last Block added to the Chain with "user" as your name.
+const MySecondBlock = Chain.Last ("user"); // {username: "ChristoPy", age: 19}
 
-// Get all Blocks added to the Chain with "My Second Block" as your name.
-const MySecondBlocks = Chain.GetAllBlocks ("My Second Block");
+// Get all Blocks added to the Chain with "user" as your name.
+const MySecondBlocks = Chain.All ("user"); // [{name: "john", last_name: "doe"}, {username: "ChristoPy", age: 19}]
+
+// Tryies to get a Block that don't exists on the Chain.
+const MyHeroes = Chain.All ("superheroes"); // null
 ```
 
-## Known Bugs
-+ If multiple instances share the same Chain, the reference of the Chain on the HD is different to them. Each one know your own Blocks but don't know the Blocks of the other instance.
+## Why blockchain?
+Why not blockchain?
+
+## Version
+2.0.0
 
 ## Thanks
 Icon made by [chanut](https://www.flaticon.com/authors/chanut "chanut") from www.flaticon.com 

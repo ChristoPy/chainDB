@@ -26,22 +26,22 @@ class chainDB {
 		this.DB = new Chain (Name);
 	}
 
-	public AddBlock (Name:string, Content:any) {
+	public Add (Name:string, Content:any) {
 
 		this.DB.NewBlock (Name, Content);
 	}
 
-	public GetFirstBlock (Name:string):object {
+	public First (Name:string):object {
 
 		return this.DB.GetBlock (Name, "first");
 	}
 
-	public GetLastBlock (Name:string):object {
+	public Last (Name:string):object {
 
 		return this.DB.GetBlock (Name, "last");
 	}
 
-	public GetAllBlocks (Name:string):Array<any> {
+	public All (Name:string):Array<any> {
 
 		return this.DB.GetBlock (Name);
 	}

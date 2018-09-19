@@ -1,7 +1,7 @@
 {
   "name": "@christopy/chaindb",
-  "version": "1.1.0",
-  "description": "A noSQL database based on blockchain tecnology",
+  "version": "2.0.0",
+  "description": "A noSQL database based on blockchain technology",
   "main": "index.js",
   "scripts": {
     "test": "node Tests/index.js",
@@ -11,7 +11,7 @@
     "nosql-databases",
     "nosql",
     "blockchain",
-    "blockchain-tecnology",
+    "blockchain-technology",
     "database",
     "databases",
     "block",
